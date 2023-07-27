@@ -1,6 +1,8 @@
 #!/bin/bash
 
 smifile=${1}
+sub=(${smifile//"."/ })
+sub=${sub[0]}
 ncpu=${2}
 crifile=${3}
 num_cris=`wc -l ${crifile} | awk '{print $1}'`
@@ -29,7 +31,7 @@ for cri_i in $(seq 1 ${num_cris}); do
 
     done
     wait
-    cat *_${cri_i}_out.smi > cri_${cri_name}_results.smi
+    cat *_${cri_i}_out.smi > ${sub}_${cri_name}_results.smi
     find . -name '*_out.smi' -type f -delete
 
 done
@@ -39,3 +41,4 @@ wait
 # cat *_out.smi > out.smi
 
 find . -name 'sub*.smi' -type f -delete
+
